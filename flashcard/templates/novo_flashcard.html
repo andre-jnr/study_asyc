@@ -96,30 +96,33 @@
 
                 <br>
                 <br>
-               
+                  {% for flashcard in flashcards %}
                     <div class="box-new-flashcard">
                         <div class="flashcard ">
 
                             <div class="flashcard-categoria">
-                                Matematica
+                                {{ flashcard.categoria }}
                             </div>
 
                             <a href=""><i class='icone-exit bx bx-x-circle'></i></a>
                             <br>
                             <br>
                             <div class="flashcard-box-item">
-                                <p class="flashcard-item">1 + 1 = 2</p>
+                                <p class="flashcard-item">
+                                  {{ flashcard.pergunta }}
+                                </p>
                             </div>
                             
                         </div>
                         <div class="resposta-flashcard">
-                            Sim
+                            {{ flashcard.resposta }}
                         </div>
                     </div>
-                    <br>
-                    <br>
-                
 
+                    <br>
+                    <br>
+
+                  {% endfor %}
             </div>
         </div>
     </div>

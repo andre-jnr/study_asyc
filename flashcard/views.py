@@ -13,7 +13,10 @@ def novo_flashcard(request):
         case 'GET':
             categorias = Categoria.objects.all()
             dificuldades = Flashcard.DIFICULDADE_CHOICES
-            return render(request, 'novo_flashcard.html', {'categorias': categorias, 'dificuldades': dificuldades},)
+            flashcards = Flashcard.objects.filter(user=request.user)
+            return render(request, 'novo_flashcard.html', {'categorias': categorias,
+                                                           'dificuldades': dificuldades,
+                                                           'flashcards': flashcards})
         case 'POST':
             pergunta = request.POST.get('pergunta')
             resposta = request.POST.get('resposta')
