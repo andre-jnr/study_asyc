@@ -97,7 +97,7 @@
                 <br>
                 <br>
                   {% for flashcard in flashcards %}
-                    <div class="box-new-flashcard">
+                    <div class="box-new-flashcard" onclick="flip_card({{flashcard.id}})">
                         <div class="flashcard ">
 
                             <div class="flashcard-categoria">
@@ -114,7 +114,7 @@
                             </div>
                             
                         </div>
-                        <div class="resposta-flashcard">
+                        <div class="resposta-flashcard" id="{{flashcard.id}}">
                             {{ flashcard.resposta }}
                         </div>
                     </div>
@@ -126,5 +126,7 @@
             </div>
         </div>
     </div>
+
+    <script src='{% static "flashcard/js/flashcard.js" %}'></script>
     
 {% endblock 'conteudo' %}
