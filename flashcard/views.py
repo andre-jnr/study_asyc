@@ -58,6 +58,8 @@ def novo_flashcard(request):
 
 
 def deletar_flashcard(request, id):
+    # Fazer a validação de segurança
+    # dica: request.user
     flashcard = Flashcard.objects.get(id=id)
     flashcard.delete()
     messages.add_message(
