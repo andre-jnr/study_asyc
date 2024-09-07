@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Categoria, Flashcard, Desafio, FlashcardDesafio
 from django.contrib.messages import constants
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 
 def novo_flashcard(request):
@@ -116,10 +116,34 @@ def iniciar_desafio(request):
             desafio.save()
 
             return redirect('/flashcard/listar_desafio')
-        
+
 
 def listar_desafio(request):
     desafios = Desafio.objects.filter(user=request.user)
     # TODO: desenvolver os status
     # TODO: desenvolver os filtros
-    return render(request, 'listar_desafio.html', {'desafio': desafios})
+    return render(request, 'listar_desafio.html', {'desafios': desafios})
+
+
+def desafio(request, id):
+    desafios = Desafio.objects.get(id=id)
+    print(desafios)
+    match request.method:
+        case 'GET':
+            return render(request, 'desafio.html', {'desafios': desafios})
+
+
+def responder_flashcard(request, id):
+    flashcard_desafio = FlashcardDesafio.objects.get(id=id)
+    acertou = request.GET.get('acertou')
+    desafio_id = request.GET.get('desafio_id')
+
+    if not flashcard_desafio.flashcard.user == request.user:
+        raise Http404()
+    
+    flashcard_desafio.respondido = True
+    
+    flashcard_desafio.acertou = True if acertou == '1' else False
+    flashcard_desafio.save()
+
+    return redirect(f'/flashcard/desafio/{desafio_id}')

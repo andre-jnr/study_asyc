@@ -16,8 +16,20 @@ class Flashcard(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
     dificuldade = models.CharField(max_length=1, choices=DIFICULDADE_CHOICES)
 
+
     def __str__(self):
         return self.pergunta
+    
+
+    @property
+    def css_dificuldade(self):
+        match self.dificuldade:
+            case 'F':
+                return 'flashcard-facil'
+            case 'M':
+                return 'flashcard-medio'
+            case 'D':
+                return 'flashcard-dificil'
 
 
 class FlashcardDesafio(models.Model):
